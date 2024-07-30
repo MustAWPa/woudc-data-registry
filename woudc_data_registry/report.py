@@ -697,21 +697,20 @@ class EmailSummary:
         :returns: List of operator report paths.
         """
 
-        run_number = 1
-        parent_dir = f'{self._working_directory}/run{run_number}'
+        parent_dir = f'{self._working_directory}'
 
-        operator_report_pattern = r'operator-report-\d{4}-\d{2}-\d{2}.csv'
+        operator_report_pattern = r'operator-report.csv'
         operator_report_paths = []
 
-        while os.path.exists(parent_dir) and os.path.isdir(parent_dir):
+        if os.path.exists(parent_dir) and os.path.isdir(parent_dir):
             for filename in os.listdir(parent_dir):
                 if re.match(operator_report_pattern, filename):
                     fullpath = os.path.join(parent_dir, filename)
                     operator_report_paths.append(fullpath)
 
-            run_number += 1
-            parent_dir = f'{self._working_directory}/run{run_number}'
-
+           
+            #parent_dir = f'{self._working_directory}'
+        
         return operator_report_paths
 
     def summarize_operator_reports(self, operator_report_paths):
